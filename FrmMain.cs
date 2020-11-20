@@ -50,9 +50,9 @@ namespace StopwatchDesktopApp
         {
             var seconds = elapsed.TotalSeconds;
 
-            var _ss = Convert.ToInt32(seconds % 60);
-            var _mm = Convert.ToInt32(seconds % 3600 / 60);
-            var _hh = Convert.ToInt32(seconds / 3600);
+            var _ss = Convert.ToInt32(Math.Floor(seconds % 60));
+            var _mm = Convert.ToInt32(Math.Floor(seconds % 3600 / 60));
+            var _hh = Convert.ToInt32(Math.Floor(seconds / 3600));
 
             var ss = _ss > 9 ? $"{_ss}" : $"0{_ss}";
             var mm = _mm > 9 ? $"{_mm}" : $"0{_mm}";
