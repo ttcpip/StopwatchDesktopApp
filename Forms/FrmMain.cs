@@ -15,41 +15,49 @@ namespace StopwatchDesktopApp
 {
     public partial class FrmMain : Form
     {
-        private List<string> NotesList { get; set; }
+        #region Properties
+        private List<string> NotesList { get; set; } = new List<string>();
         private Stopwatch Stopwatcher { get; set; } = null;
-        private bool IsStopwatcherCounting { get; set; }
-        private bool IsStopwatcherExists { get; set; }
+        private bool IsStopwatcherCounting { get; set; } = false;
+        private bool IsStopwatcherExists { get; set; } = false;
         private double LastTotalHours { get; set; }
+        #endregion
 
         public FrmMain()
         {
             InitializeComponent();
 
-            IsStopwatcherExists = false;
-            IsStopwatcherCounting = false;
-
-            NotesList = new List<string>();
             listBoxNotes.DataSource = notesBindingSource;
 
             StartBackgroundWoker();
         }
 
+        #region Methods
         private async void StartBackgroundWoker()
         {
             do // infinity loop with interval
             {
-                do  // no loop, executes one time per top level loop
-                {
-                    if (!IsStopwatcherExists || !IsStopwatcherCounting)
-                        break;
+                var iterationStartTime = DateTime.Now;
 
-                    UpdateTimeLabelsAppearance(Stopwatcher.Elapsed);
-                } while (false);
+                WorkerTick();
 
-                await Task.Delay(1000);
+                var iterationEndTime = DateTime.Now;
+                var diff = (iterationEndTime - iterationStartTime).TotalMilliseconds;
+                var timeToWait = Convert.ToInt32(Math.Max(Constants.WORKER_WAIT_INTERVAL - diff, 0));
+
+                await Task.Delay(timeToWait);
             } while (true);
         }
-        private void UpdateTimeLabelsAppearance(TimeSpan elapsed)
+        private void WorkerTick()
+        {
+            if (!IsStopwatcherExists || !IsStopwatcherCounting)
+                return;
+
+            LastTotalHours = Stopwatcher.Elapsed.TotalHours;
+            UpdateTimeLabelsText(Stopwatcher.Elapsed);
+            UpdateCostLabelText();
+        }
+        private void UpdateTimeLabelsText(TimeSpan elapsed)
         {
             var seconds = elapsed.TotalSeconds;
 
@@ -64,11 +72,8 @@ namespace StopwatchDesktopApp
             labelStopwatchTime.Text = $"{hh}:{mm}:{ss}";
             labelTotalMinutes.Text = elapsed.TotalMinutes.ToString(@"0.##", CultureInfo.InvariantCulture);
             labelTotalHours.Text = elapsed.TotalHours.ToString(@"0.####", CultureInfo.InvariantCulture);
-            LastTotalHours = elapsed.TotalHours;
-
-            UpdateCostAppearance();
         }
-        private void UpdateCostAppearance()
+        private void UpdateCostLabelText()
         {
             var hourPrice = 0.0;
             try
@@ -77,47 +82,10 @@ namespace StopwatchDesktopApp
             }
             catch (Exception){}
             var hours = LastTotalHours;
-            var cost = (hours * hourPrice);
+            var cost = hours * hourPrice;
 
-            labelCost.Text = (cost > 0 ? cost : 0).ToString(@"0.##", CultureInfo.InvariantCulture);
+            labelCost.Text = cost.ToString(@"0.##", CultureInfo.InvariantCulture);
         }
-
-        private void listBoxNotes_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Control == true && e.KeyCode == Keys.C)
-            {
-                string s = listBoxNotes.SelectedItem as string;
-                if (s.Length > 0)
-                {
-                    Clipboard.SetData(DataFormats.StringFormat, s);
-                    e.Handled = true;
-                }
-            }
-            else if (e.KeyCode == Keys.Delete)
-            {
-                if (listBoxNotes.SelectedIndex > -1)
-                {
-                    NotesList.RemoveAt(listBoxNotes.SelectedIndex);
-                    notesBindingSource.DataSource = new BindingList<string>(NotesList);
-                    e.Handled = true;
-                }
-            }
-        }
-        private void CopyTextToClipboardOnAnyLabelDoubleClick(object sender, EventArgs e)
-        {
-            var label = sender as Label;
-            if (label == null)
-                return;
-            Clipboard.SetData(DataFormats.StringFormat, label.Text);
-        }
-
-        private void btnStartStop_Click(object sender, EventArgs e)
-        {
-            StartOrStopOrContinueStopwatcher();
-
-            btnStartStop.Text = IsStopwatcherCounting ? "Stop" : "Start";
-        }
-
         private void StartOrStopOrContinueStopwatcher()
         {
             if (IsStopwatcherExists)
@@ -140,37 +108,69 @@ namespace StopwatchDesktopApp
                 IsStopwatcherCounting = true;
             }
         }
+        #endregion
 
+        #region Event handlers
+        private void listBoxNotes_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control == true && e.KeyCode == Keys.C) // Copy selected item
+            {
+                string s = listBoxNotes.SelectedItem as string;
+                if (s.Length > 0)
+                {
+                    Clipboard.SetData(DataFormats.StringFormat, s);
+                    e.Handled = true;
+                }
+            }
+            else if (e.KeyCode == Keys.Delete) // Delete selected item
+            {
+                if (listBoxNotes.SelectedIndex > -1)
+                {
+                    NotesList.RemoveAt(listBoxNotes.SelectedIndex);
+                    notesBindingSource.DataSource = new BindingList<string>(NotesList);
+                    e.Handled = true;
+                }
+            }
+        }
+        private void CopyTextToClipboardOnAnyLabelDoubleClick(object sender, EventArgs e)
+        {
+            var label = sender as Label;
+            if (label == null)
+                return;
+            Clipboard.SetData(DataFormats.StringFormat, label.Text);
+        }
+        private void btnStartStop_Click(object sender, EventArgs e)
+        {
+            StartOrStopOrContinueStopwatcher();
+
+            btnStartStop.Text = IsStopwatcherCounting ? "Stop" : "Start";
+        }
         private void btnRestart_Click(object sender, EventArgs e)
         {
             IsStopwatcherExists = false;
             Stopwatcher = null;
             IsStopwatcherCounting = false;
 
-            UpdateTimeLabelsAppearance(new TimeSpan());
+            UpdateTimeLabelsText(new TimeSpan());
 
             btnStartStop.Text = "Start";
         }
-
         private void btnNote_Click(object sender, EventArgs e)
         {
             var addInfo = tbxNoteText.Text.Length > 0 ? " " + tbxNoteText.Text : "";
             var note = $"{NotesList.Count + 1}. {labelStopwatchTime.Text}{addInfo}";
 
             NotesList.Add(note);
-
             listBoxNotes.Focus();
-
             tbxNoteText.Text = "";
-
             notesBindingSource.DataSource = new BindingList<string>(NotesList);
         }
-
         private void tbxHourPrice_TextChanged(object sender, EventArgs e)
         {
             tbxHourPrice.Text = Regex.Match(tbxHourPrice.Text.Trim(), @"[0-9\.]+").Value;
 
-            UpdateCostAppearance();
+            UpdateCostLabelText();
         }
+        #endregion
     }
 }
