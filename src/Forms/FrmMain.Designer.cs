@@ -1,4 +1,4 @@
-﻿namespace StopwatchDesktopApp
+﻿namespace StopwatchDesktopApp.src.forms
 {
     partial class FrmMain
     {
@@ -30,6 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panelTop = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.labelCost = new System.Windows.Forms.Label();
+            this.tbxHourPrice = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.labelTotalHours = new System.Windows.Forms.Label();
@@ -40,12 +43,9 @@
             this.btnStartStop = new System.Windows.Forms.Button();
             this.labelStopwatchTime = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
             this.listBoxNotes = new System.Windows.Forms.ListBox();
             this.notesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.label3 = new System.Windows.Forms.Label();
-            this.tbxHourPrice = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.labelCost = new System.Windows.Forms.Label();
             this.panelTop.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.notesBindingSource)).BeginInit();
@@ -71,6 +71,43 @@
             this.panelTop.Name = "panelTop";
             this.panelTop.Size = new System.Drawing.Size(376, 233);
             this.panelTop.TabIndex = 0;
+            // 
+            // label4
+            // 
+            this.label4.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label4.Location = new System.Drawing.Point(205, 187);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(55, 38);
+            this.label4.TabIndex = 10;
+            this.label4.Text = "Cost:";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // labelCost
+            // 
+            this.labelCost.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.labelCost.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.labelCost.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelCost.Location = new System.Drawing.Point(258, 187);
+            this.labelCost.Name = "labelCost";
+            this.labelCost.Size = new System.Drawing.Size(118, 38);
+            this.labelCost.TabIndex = 9;
+            this.labelCost.Text = "0";
+            this.labelCost.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.labelCost.DoubleClick += new System.EventHandler(this.CopyTextToClipboardOnAnyLabelDoubleClick);
+            // 
+            // tbxHourPrice
+            // 
+            this.tbxHourPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.5F);
+            this.tbxHourPrice.Location = new System.Drawing.Point(13, 189);
+            this.tbxHourPrice.MaxLength = 20;
+            this.tbxHourPrice.Name = "tbxHourPrice";
+            this.tbxHourPrice.Size = new System.Drawing.Size(161, 34);
+            this.tbxHourPrice.TabIndex = 8;
+            this.tbxHourPrice.Text = "850";
+            this.tbxHourPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbxHourPrice.TextChanged += new System.EventHandler(this.tbxHourPrice_TextChanged);
             // 
             // label2
             // 
@@ -194,6 +231,17 @@
             this.panel1.Size = new System.Drawing.Size(236, 233);
             this.panel1.TabIndex = 1;
             // 
+            // label3
+            // 
+            this.label3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label3.Location = new System.Drawing.Point(9, 9);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(165, 39);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Notes:";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // listBoxNotes
             // 
             this.listBoxNotes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -206,54 +254,6 @@
             this.listBoxNotes.Size = new System.Drawing.Size(211, 172);
             this.listBoxNotes.TabIndex = 0;
             this.listBoxNotes.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBoxNotes_KeyDown);
-            // 
-            // label3
-            // 
-            this.label3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(9, 9);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(165, 39);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "Notes:";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // tbxHourPrice
-            // 
-            this.tbxHourPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.5F);
-            this.tbxHourPrice.Location = new System.Drawing.Point(13, 189);
-            this.tbxHourPrice.MaxLength = 20;
-            this.tbxHourPrice.Name = "tbxHourPrice";
-            this.tbxHourPrice.Size = new System.Drawing.Size(161, 34);
-            this.tbxHourPrice.TabIndex = 8;
-            this.tbxHourPrice.Text = "850";
-            this.tbxHourPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.tbxHourPrice.TextChanged += new System.EventHandler(this.tbxHourPrice_TextChanged);
-            // 
-            // label4
-            // 
-            this.label4.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.label4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(205, 187);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(55, 38);
-            this.label4.TabIndex = 10;
-            this.label4.Text = "Cost:";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // labelCost
-            // 
-            this.labelCost.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.labelCost.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.labelCost.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelCost.Location = new System.Drawing.Point(258, 187);
-            this.labelCost.Name = "labelCost";
-            this.labelCost.Size = new System.Drawing.Size(118, 38);
-            this.labelCost.TabIndex = 9;
-            this.labelCost.Text = "0";
-            this.labelCost.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.labelCost.DoubleClick += new System.EventHandler(this.CopyTextToClipboardOnAnyLabelDoubleClick);
             // 
             // FrmMain
             // 

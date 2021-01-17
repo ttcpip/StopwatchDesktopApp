@@ -5,8 +5,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using StopwatchDesktopApp.src.forms;
 
-namespace StopwatchDesktopApp
+namespace StopwatchDesktopApp.src
 {
     static class Program
     {

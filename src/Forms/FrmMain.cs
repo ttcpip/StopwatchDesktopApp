@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using System.Globalization;
 
-namespace StopwatchDesktopApp
+namespace StopwatchDesktopApp.src.forms
 {
     public partial class FrmMain : Form
     {
