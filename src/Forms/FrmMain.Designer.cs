@@ -30,11 +30,12 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panelTop = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
+            this.labelTextHourPrice = new System.Windows.Forms.Label();
+            this.labelTextFinalCost = new System.Windows.Forms.Label();
             this.labelCost = new System.Windows.Forms.Label();
             this.tbxHourPrice = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelTextHours = new System.Windows.Forms.Label();
+            this.labelTextMinutes = new System.Windows.Forms.Label();
             this.labelTotalHours = new System.Windows.Forms.Label();
             this.labelTotalMinutes = new System.Windows.Forms.Label();
             this.btnNote = new System.Windows.Forms.Button();
@@ -43,23 +44,29 @@
             this.btnStartStop = new System.Windows.Forms.Button();
             this.labelStopwatchTime = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
+            this.labelTextNotes = new System.Windows.Forms.Label();
             this.listBoxNotes = new System.Windows.Forms.ListBox();
             this.notesBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.languageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.englishToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.русскийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelTop.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.notesBindingSource)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelTop
             // 
             this.panelTop.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.panelTop.Controls.Add(this.label4);
+            this.panelTop.Controls.Add(this.labelTextHourPrice);
+            this.panelTop.Controls.Add(this.labelTextFinalCost);
             this.panelTop.Controls.Add(this.labelCost);
             this.panelTop.Controls.Add(this.tbxHourPrice);
-            this.panelTop.Controls.Add(this.label2);
-            this.panelTop.Controls.Add(this.label1);
+            this.panelTop.Controls.Add(this.labelTextHours);
+            this.panelTop.Controls.Add(this.labelTextMinutes);
             this.panelTop.Controls.Add(this.labelTotalHours);
             this.panelTop.Controls.Add(this.labelTotalMinutes);
             this.panelTop.Controls.Add(this.btnNote);
@@ -67,31 +74,41 @@
             this.panelTop.Controls.Add(this.btnRestart);
             this.panelTop.Controls.Add(this.btnStartStop);
             this.panelTop.Controls.Add(this.labelStopwatchTime);
-            this.panelTop.Location = new System.Drawing.Point(0, 0);
+            this.panelTop.Location = new System.Drawing.Point(0, 22);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(376, 233);
+            this.panelTop.Size = new System.Drawing.Size(376, 286);
             this.panelTop.TabIndex = 0;
             // 
-            // label4
+            // labelTextHourPrice
             // 
-            this.label4.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.label4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(205, 187);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(55, 38);
-            this.label4.TabIndex = 10;
-            this.label4.Text = "Cost:";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelTextHourPrice.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.labelTextHourPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelTextHourPrice.Location = new System.Drawing.Point(9, 189);
+            this.labelTextHourPrice.Name = "labelTextHourPrice";
+            this.labelTextHourPrice.Size = new System.Drawing.Size(165, 38);
+            this.labelTextHourPrice.TabIndex = 11;
+            this.labelTextHourPrice.Text = "Hour price:";
+            this.labelTextHourPrice.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // labelTextFinalCost
+            // 
+            this.labelTextFinalCost.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.labelTextFinalCost.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelTextFinalCost.Location = new System.Drawing.Point(9, 227);
+            this.labelTextFinalCost.Name = "labelTextFinalCost";
+            this.labelTextFinalCost.Size = new System.Drawing.Size(217, 38);
+            this.labelTextFinalCost.TabIndex = 10;
+            this.labelTextFinalCost.Text = "Final cost:";
+            this.labelTextFinalCost.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // labelCost
             // 
-            this.labelCost.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.labelCost.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelCost.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.labelCost.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelCost.Location = new System.Drawing.Point(258, 187);
+            this.labelCost.Location = new System.Drawing.Point(232, 227);
             this.labelCost.Name = "labelCost";
-            this.labelCost.Size = new System.Drawing.Size(118, 38);
+            this.labelCost.Size = new System.Drawing.Size(138, 38);
             this.labelCost.TabIndex = 9;
             this.labelCost.Text = "0";
             this.labelCost.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -99,8 +116,9 @@
             // 
             // tbxHourPrice
             // 
+            this.tbxHourPrice.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.tbxHourPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.5F);
-            this.tbxHourPrice.Location = new System.Drawing.Point(13, 189);
+            this.tbxHourPrice.Location = new System.Drawing.Point(209, 190);
             this.tbxHourPrice.MaxLength = 20;
             this.tbxHourPrice.Name = "tbxHourPrice";
             this.tbxHourPrice.Size = new System.Drawing.Size(161, 34);
@@ -109,32 +127,32 @@
             this.tbxHourPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tbxHourPrice.TextChanged += new System.EventHandler(this.tbxHourPrice_TextChanged);
             // 
-            // label2
+            // labelTextHours
             // 
-            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.label2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(205, 68);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(74, 38);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "Hours:";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelTextHours.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelTextHours.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.labelTextHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelTextHours.Location = new System.Drawing.Point(205, 68);
+            this.labelTextHours.Name = "labelTextHours";
+            this.labelTextHours.Size = new System.Drawing.Size(74, 38);
+            this.labelTextHours.TabIndex = 7;
+            this.labelTextHours.Text = "Hours:";
+            this.labelTextHours.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // label1
+            // labelTextMinutes
             // 
-            this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(9, 68);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(83, 38);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "Minutes:";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelTextMinutes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.labelTextMinutes.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelTextMinutes.Location = new System.Drawing.Point(9, 68);
+            this.labelTextMinutes.Name = "labelTextMinutes";
+            this.labelTextMinutes.Size = new System.Drawing.Size(89, 38);
+            this.labelTextMinutes.TabIndex = 6;
+            this.labelTextMinutes.Text = "Minutes:";
+            this.labelTextMinutes.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // labelTotalHours
             // 
-            this.labelTotalHours.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.labelTotalHours.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelTotalHours.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.labelTotalHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelTotalHours.Location = new System.Drawing.Point(285, 68);
@@ -149,9 +167,9 @@
             // 
             this.labelTotalMinutes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.labelTotalMinutes.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelTotalMinutes.Location = new System.Drawing.Point(84, 68);
+            this.labelTotalMinutes.Location = new System.Drawing.Point(98, 68);
             this.labelTotalMinutes.Name = "labelTotalMinutes";
-            this.labelTotalMinutes.Size = new System.Drawing.Size(94, 38);
+            this.labelTotalMinutes.Size = new System.Drawing.Size(80, 38);
             this.labelTotalMinutes.TabIndex = 5;
             this.labelTotalMinutes.Text = "0";
             this.labelTotalMinutes.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -159,7 +177,7 @@
             // 
             // btnNote
             // 
-            this.btnNote.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.btnNote.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnNote.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnNote.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
             this.btnNote.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -181,7 +199,7 @@
             // 
             // btnRestart
             // 
-            this.btnRestart.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.btnRestart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRestart.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnRestart.FlatAppearance.CheckedBackColor = System.Drawing.Color.Red;
             this.btnRestart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -208,7 +226,7 @@
             // 
             // labelStopwatchTime
             // 
-            this.labelStopwatchTime.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.labelStopwatchTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelStopwatchTime.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.labelStopwatchTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelStopwatchTime.Location = new System.Drawing.Point(3, 7);
@@ -224,23 +242,23 @@
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.labelTextNotes);
             this.panel1.Controls.Add(this.listBoxNotes);
-            this.panel1.Location = new System.Drawing.Point(376, 0);
+            this.panel1.Location = new System.Drawing.Point(376, 22);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(236, 233);
+            this.panel1.Size = new System.Drawing.Size(301, 286);
             this.panel1.TabIndex = 1;
             // 
-            // label3
+            // labelTextNotes
             // 
-            this.label3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(9, 9);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(165, 39);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "Notes:";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelTextNotes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.labelTextNotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelTextNotes.Location = new System.Drawing.Point(9, 9);
+            this.labelTextNotes.Name = "labelTextNotes";
+            this.labelTextNotes.Size = new System.Drawing.Size(165, 39);
+            this.labelTextNotes.TabIndex = 8;
+            this.labelTextNotes.Text = "Notes:";
+            this.labelTextNotes.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // listBoxNotes
             // 
@@ -251,19 +269,54 @@
             this.listBoxNotes.ItemHeight = 24;
             this.listBoxNotes.Location = new System.Drawing.Point(13, 51);
             this.listBoxNotes.Name = "listBoxNotes";
-            this.listBoxNotes.Size = new System.Drawing.Size(211, 172);
+            this.listBoxNotes.Size = new System.Drawing.Size(276, 196);
             this.listBoxNotes.TabIndex = 0;
             this.listBoxNotes.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBoxNotes_KeyDown);
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.languageToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(677, 24);
+            this.menuStrip1.TabIndex = 2;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // languageToolStripMenuItem
+            // 
+            this.languageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.englishToolStripMenuItem,
+            this.русскийToolStripMenuItem});
+            this.languageToolStripMenuItem.Name = "languageToolStripMenuItem";
+            this.languageToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
+            this.languageToolStripMenuItem.Text = "Language";
+            // 
+            // englishToolStripMenuItem
+            // 
+            this.englishToolStripMenuItem.Name = "englishToolStripMenuItem";
+            this.englishToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.englishToolStripMenuItem.Text = "English";
+            this.englishToolStripMenuItem.Click += new System.EventHandler(this.englishToolStripMenuItem_Click);
+            // 
+            // русскийToolStripMenuItem
+            // 
+            this.русскийToolStripMenuItem.Name = "русскийToolStripMenuItem";
+            this.русскийToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.русскийToolStripMenuItem.Text = "Русский";
+            this.русскийToolStripMenuItem.Click += new System.EventHandler(this.русскийToolStripMenuItem_Click);
             // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(612, 245);
+            this.ClientSize = new System.Drawing.Size(677, 291);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panelTop);
+            this.Controls.Add(this.menuStrip1);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(6);
             this.MinimumSize = new System.Drawing.Size(628, 284);
             this.Name = "FrmMain";
@@ -274,7 +327,10 @@
             this.panelTop.PerformLayout();
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.notesBindingSource)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -288,15 +344,20 @@
         private System.Windows.Forms.TextBox tbxNoteText;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ListBox listBoxNotes;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelTextHours;
+        private System.Windows.Forms.Label labelTextMinutes;
         private System.Windows.Forms.Label labelTotalHours;
         private System.Windows.Forms.Label labelTotalMinutes;
         private System.Windows.Forms.BindingSource notesBindingSource;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label labelTextNotes;
+        private System.Windows.Forms.Label labelTextFinalCost;
         private System.Windows.Forms.Label labelCost;
         private System.Windows.Forms.TextBox tbxHourPrice;
+        private System.Windows.Forms.Label labelTextHourPrice;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem languageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem englishToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem русскийToolStripMenuItem;
     }
 }
 

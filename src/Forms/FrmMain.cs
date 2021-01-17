@@ -21,18 +21,44 @@ namespace StopwatchDesktopApp.src.forms
         private bool IsStopwatcherCounting { get; set; } = false;
         private bool IsStopwatcherExists { get; set; } = false;
         private double LastTotalHours { get; set; }
+        private StringsManager StringsManager { get; set; }
         #endregion
 
-        public FrmMain()
+        public FrmMain(StringsManager stringsManager)
         {
             InitializeComponent();
 
+            StringsManager = stringsManager;
             listBoxNotes.DataSource = notesBindingSource;
 
+            //MessageBox.Show("Current: " + StringsManager.GetString("langStringKey"));
+
+            //StringsManager.SetLang(Language.English);
+            //MessageBox.Show("En: " + StringsManager.GetString("langStringKey"));
+            //StringsManager.SetLang(Language.Russian);
+            //MessageBox.Show("Ru: " + StringsManager.GetString("langStringKey"));
+
+            UpdateStrings();
             StartBackgroundWoker();
         }
 
         #region Methods
+        private void UpdateStrings()
+        {
+            Text = StringsManager.GetString("stopwatch");
+
+            languageToolStripMenuItem.Text = StringsManager.GetString("language");
+
+            labelTextMinutes.Text = StringsManager.GetString("minutes:");
+            labelTextHours.Text = StringsManager.GetString("hours:");
+            labelTextNotes.Text = StringsManager.GetString("notes:");
+            labelTextFinalCost.Text = StringsManager.GetString("finalCost:");
+            labelTextHourPrice.Text = StringsManager.GetString("hourPirce:");
+
+            btnStartStop.Text = IsStopwatcherCounting ? StringsManager.GetString("stop") : StringsManager.GetString("start");
+            btnRestart.Text = StringsManager.GetString("reset");
+            btnNote.Text = StringsManager.GetString("note");
+        }
         private async void StartBackgroundWoker()
         {
             do // infinity loop with interval
@@ -48,6 +74,7 @@ namespace StopwatchDesktopApp.src.forms
                 await Task.Delay(timeToWait);
             } while (true);
         }
+        
         private void WorkerTick()
         {
             if (!IsStopwatcherExists || !IsStopwatcherCounting)
@@ -143,7 +170,7 @@ namespace StopwatchDesktopApp.src.forms
         {
             StartOrStopOrContinueStopwatcher();
 
-            btnStartStop.Text = IsStopwatcherCounting ? "Stop" : "Start";
+            btnStartStop.Text = IsStopwatcherCounting ? StringsManager.GetString("stop") : StringsManager.GetString("start");
         }
         private void btnRestart_Click(object sender, EventArgs e)
         {
@@ -153,7 +180,7 @@ namespace StopwatchDesktopApp.src.forms
 
             UpdateTimeLabelsText(new TimeSpan());
 
-            btnStartStop.Text = "Start";
+            btnStartStop.Text = StringsManager.GetString("start");
         }
         private void btnNote_Click(object sender, EventArgs e)
         {
@@ -170,6 +197,16 @@ namespace StopwatchDesktopApp.src.forms
             tbxHourPrice.Text = Regex.Match(tbxHourPrice.Text.Trim(), @"[0-9\.]+").Value;
 
             UpdateCostLabelText();
+        }
+        private void englishToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            StringsManager.SetLang(Language.English);
+            UpdateStrings();
+        }
+        private void русскийToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            StringsManager.SetLang(Language.Russian);
+            UpdateStrings();
         }
         #endregion
     }
