@@ -113,6 +113,10 @@ namespace StopwatchDesktopApp.src.forms
 
             labelCost.Text = cost.ToString(@"0.##", CultureInfo.InvariantCulture);
         }
+        private void UpdateCostLabelText(double cost)
+        {
+            labelCost.Text = cost.ToString(@"0.##", CultureInfo.InvariantCulture);
+        }
         private void StartOrStopOrContinueStopwatcher()
         {
             if (IsStopwatcherExists)
@@ -179,6 +183,7 @@ namespace StopwatchDesktopApp.src.forms
             IsStopwatcherCounting = false;
 
             UpdateTimeLabelsText(new TimeSpan());
+            UpdateCostLabelText(0.0);
 
             btnStartStop.Text = StringsManager.GetString("start");
         }
