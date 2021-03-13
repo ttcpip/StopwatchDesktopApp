@@ -28,6 +28,8 @@ namespace StopwatchDesktopApp.src.forms
         {
             InitializeComponent();
 
+            tbxHourPrice.Text = Constants.DEFAULT_HOUR_PRICE.ToString();
+
             StringsManager = stringsManager;
             listBoxNotes.DataSource = notesBindingSource;
 
