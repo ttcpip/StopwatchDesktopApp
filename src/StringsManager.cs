@@ -71,15 +71,6 @@ namespace StopwatchDesktopApp.src
             var gotStr = ResourceManager.GetString(stringIdentifier, new CultureInfo(LangStr));
             if (!string.IsNullOrEmpty(gotStr))
                 str = gotStr;
-            try
-            {
-                
-            }
-            catch (Exception )
-            {
-
-                throw;
-            }
             return str;
         }
 

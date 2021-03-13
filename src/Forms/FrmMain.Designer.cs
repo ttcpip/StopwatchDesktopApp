@@ -47,14 +47,14 @@
             this.labelTextNotes = new System.Windows.Forms.Label();
             this.listBoxNotes = new System.Windows.Forms.ListBox();
             this.notesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.menuStripLanguage = new System.Windows.Forms.MenuStrip();
             this.languageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.englishToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.русскийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelTop.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.notesBindingSource)).BeginInit();
-            this.menuStrip1.SuspendLayout();
+            this.menuStripLanguage.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelTop
@@ -123,7 +123,7 @@
             this.tbxHourPrice.Name = "tbxHourPrice";
             this.tbxHourPrice.Size = new System.Drawing.Size(161, 34);
             this.tbxHourPrice.TabIndex = 8;
-            this.tbxHourPrice.Text = "850";
+            this.tbxHourPrice.Text = "0";
             this.tbxHourPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tbxHourPrice.TextChanged += new System.EventHandler(this.tbxHourPrice_TextChanged);
             // 
@@ -273,15 +273,16 @@
             this.listBoxNotes.TabIndex = 0;
             this.listBoxNotes.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBoxNotes_KeyDown);
             // 
-            // menuStrip1
+            // menuStripLanguage
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuStripLanguage.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.languageToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(677, 24);
-            this.menuStrip1.TabIndex = 2;
-            this.menuStrip1.Text = "menuStrip1";
+            this.menuStripLanguage.Location = new System.Drawing.Point(0, 0);
+            this.menuStripLanguage.MinimumSize = new System.Drawing.Size(0, 0);
+            this.menuStripLanguage.Name = "menuStripLanguage";
+            this.menuStripLanguage.Size = new System.Drawing.Size(677, 24);
+            this.menuStripLanguage.TabIndex = 2;
+            this.menuStripLanguage.Text = "menuStrip1";
             // 
             // languageToolStripMenuItem
             // 
@@ -313,12 +314,12 @@
             this.ClientSize = new System.Drawing.Size(677, 291);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panelTop);
-            this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.menuStripLanguage);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.MainMenuStrip = this.menuStrip1;
+            this.MainMenuStrip = this.menuStripLanguage;
             this.Margin = new System.Windows.Forms.Padding(6);
-            this.MinimumSize = new System.Drawing.Size(693, 330);
+            this.MinimumSize = new System.Drawing.Size(400, 330);
             this.Name = "FrmMain";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -327,8 +328,8 @@
             this.panelTop.PerformLayout();
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.notesBindingSource)).EndInit();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.menuStripLanguage.ResumeLayout(false);
+            this.menuStripLanguage.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -354,7 +355,7 @@
         private System.Windows.Forms.Label labelCost;
         private System.Windows.Forms.TextBox tbxHourPrice;
         private System.Windows.Forms.Label labelTextHourPrice;
-        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.MenuStrip menuStripLanguage;
         private System.Windows.Forms.ToolStripMenuItem languageToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem englishToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem русскийToolStripMenuItem;
