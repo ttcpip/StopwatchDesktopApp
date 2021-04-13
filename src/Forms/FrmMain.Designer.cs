@@ -278,7 +278,6 @@
             this.menuStripLanguage.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.languageToolStripMenuItem});
             this.menuStripLanguage.Location = new System.Drawing.Point(0, 0);
-            this.menuStripLanguage.MinimumSize = new System.Drawing.Size(0, 0);
             this.menuStripLanguage.Name = "menuStripLanguage";
             this.menuStripLanguage.Size = new System.Drawing.Size(677, 24);
             this.menuStripLanguage.TabIndex = 2;
