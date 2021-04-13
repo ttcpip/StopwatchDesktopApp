@@ -22,18 +22,18 @@ namespace StopwatchDesktopApp.src.forms
         private bool IsStopwatcherExists { get; set; } = false;
         private double LastTotalHours { get; set; }
         private StringsManager StringsManager { get; set; }
+        private Config Config { get; set; }
         #endregion
 
-        public FrmMain(StringsManager stringsManager)
+        public FrmMain(Config config, StringsManager stringsManager)
         {
             InitializeComponent();
 
-            Size = new Size(MinimumSize.Width, Size.Height);
-
-            tbxHourPrice.Text = Constants.DEFAULT_HOUR_PRICE.ToString();
-
+            Config = config;
             StringsManager = stringsManager;
             listBoxNotes.DataSource = notesBindingSource;
+            Size = new Size(MinimumSize.Width, Size.Height);
+            tbxHourPrice.Text = Config.HourPrice.ToString();
 
             //MessageBox.Show("Current: " + StringsManager.GetString("langStringKey"));
 
@@ -73,7 +73,7 @@ namespace StopwatchDesktopApp.src.forms
 
                 var iterationEndTime = DateTime.Now;
                 var diff = (iterationEndTime - iterationStartTime).TotalMilliseconds;
-                var timeToWait = Convert.ToInt32(Math.Max(Constants.WORKER_WAIT_INTERVAL - diff, 0));
+                var timeToWait = Convert.ToInt32(Math.Max(Config.WorkerWaitInterval - diff, 0));
 
                 await Task.Delay(timeToWait);
             } while (true);
@@ -203,9 +203,22 @@ namespace StopwatchDesktopApp.src.forms
         }
         private void tbxHourPrice_TextChanged(object sender, EventArgs e)
         {
-            tbxHourPrice.Text = Regex.Match(tbxHourPrice.Text.Trim(), @"[0-9\.]+").Value;
+            var newHourPrice = decimal.Zero;
+            var isValidDecimal = decimal.TryParse(tbxHourPrice.Text, out newHourPrice);
 
-            UpdateCostLabelText();
+            if (isValidDecimal)
+            {
+                tbxHourPrice.Text = newHourPrice.ToString();
+                Config.HourPrice = newHourPrice;
+                Config.SaveToFile();
+                UpdateCostLabelText();
+            }
+            else
+            {
+                var allowedChars = "0123456789".Select(chr => chr);
+                tbxHourPrice.Text = string.Join("", tbxHourPrice.Text.Where(el => allowedChars.Contains(el)));
+            }
+
         }
         private void englishToolStripMenuItem_Click(object sender, EventArgs e)
         {

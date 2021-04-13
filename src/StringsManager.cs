@@ -14,14 +14,16 @@ namespace StopwatchDesktopApp.src
         private Language Lang { get; set; }
         private string LangStr { get { return LangToString(); } }
         private ResourceManager ResourceManager { get; set; }
+        private Config Config { get; set; }
 
-        public StringsManager(Language lang = Language.English)
+        public StringsManager(Config config, Language lang = Language.English)
         {
+            Config = config;
             Lang = lang;
             if (LangStr == string.Empty)
                 throw new ArgumentException("Unsupported language");
 
-            ResourceManager = new ResourceManager($"{Constants.APP_NAME}.languages.LanguageStrings", Assembly.GetExecutingAssembly());
+            ResourceManager = new ResourceManager($"{Config.AppName}.languages.LanguageStrings", Assembly.GetExecutingAssembly());
         }
 
         public static string LangToString(Language lang)

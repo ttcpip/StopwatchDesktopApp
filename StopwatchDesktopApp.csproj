@@ -56,7 +56,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LanguageStrings.ru-RU.resx</DependentUpon>
     </Compile>
-    <Compile Include="src\Constants.cs" />
+    <Compile Include="src\Config.cs" />
     <Compile Include="src\Forms\FrmMain.cs">
       <SubType>Form</SubType>
     </Compile>

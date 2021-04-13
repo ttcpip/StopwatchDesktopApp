@@ -14,11 +14,13 @@ namespace StopwatchDesktopApp.src
         [STAThread]
         static void Main()
         {
+            var config = Config.LoadFromFile("./config.dat");
+
             // Set system language as current language for the strings manager
             var currentLangName = Thread.CurrentThread.CurrentCulture.Name;
             var _lang = StringsManager.StringToLang(currentLangName);
             var lang = _lang != Language.Undefined ? _lang : Language.English;
-            var stringsManager = new StringsManager(lang);
+            var stringsManager = new StringsManager(config, lang);
 
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
@@ -29,7 +31,7 @@ namespace StopwatchDesktopApp.src
             Application.ThreadException += new ThreadExceptionEventHandler(Application_ThreadException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
 
-            Application.Run(new FrmMain(stringsManager));
+            Application.Run(new FrmMain(config, stringsManager));
         }
 
         static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
