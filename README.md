@@ -1,5 +1,5 @@
 # Main menu
 
-![Image](https://i.imgur.com/Zuq1cSF.png)
+![Image](https://i.imgur.com/hyESPax.png)
 
-![Image](https://i.imgur.com/hNg989p.png)
+![Image](https://i.imgur.com/2pu02Ni.png)
