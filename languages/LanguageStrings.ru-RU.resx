@@ -117,29 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="finalCost:" xml:space="preserve">
+  <data name="finalCost" xml:space="preserve">
     <value>Итоговая стоимость:</value>
   </data>
-  <data name="hourPirce:" xml:space="preserve">
+  <data name="hourPirce" xml:space="preserve">
     <value>Стоимость часа:</value>
-  </data>
-  <data name="hours:" xml:space="preserve">
-    <value>Часы:</value>
   </data>
   <data name="langStringKey" xml:space="preserve">
     <value>ru_RU_VALUE</value>
-  </data>
-  <data name="language" xml:space="preserve">
-    <value>Язык</value>
-  </data>
-  <data name="minutes:" xml:space="preserve">
-    <value>Минуты:</value>
-  </data>
-  <data name="note" xml:space="preserve">
-    <value>Заметка</value>
-  </data>
-  <data name="notes:" xml:space="preserve">
-    <value>Заметки:</value>
   </data>
   <data name="reset" xml:space="preserve">
     <value>Сбросить</value>

@@ -1,26 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Text.RegularExpressions;
-using System.Globalization;
 
 namespace StopwatchDesktopApp.src.forms
 {
     public partial class FrmMain : Form
     {
         #region Properties
-        private List<string> NotesList { get; set; } = new List<string>();
-        private Stopwatch Stopwatcher { get; set; } = null;
-        private bool IsStopwatcherCounting { get; set; } = false;
-        private bool IsStopwatcherExists { get; set; } = false;
-        private double LastTotalHours { get; set; }
+        private const int WorkerIntervalLabels = 100;
+        private const int WorkerIntervalSaveConfig = 2000;
+        private const int CopiedNotificationTimeout = 400;
+        private MyStopwatch Stopwatcher { get; set; } = new MyStopwatch();
         private StringsManager StringsManager { get; set; }
         private Config Config { get; set; }
         #endregion
@@ -31,205 +23,108 @@ namespace StopwatchDesktopApp.src.forms
 
             Config = config;
             StringsManager = stringsManager;
-            listBoxNotes.DataSource = notesBindingSource;
             Size = new Size(MinimumSize.Width, Size.Height);
-            tbxHourPrice.Text = Config.HourPrice.ToString();
 
-            //MessageBox.Show("Current: " + StringsManager.GetString("langStringKey"));
-
-            //StringsManager.SetLang(Language.English);
-            //MessageBox.Show("En: " + StringsManager.GetString("langStringKey"));
-            //StringsManager.SetLang(Language.Russian);
-            //MessageBox.Show("Ru: " + StringsManager.GetString("langStringKey"));
-
+            labelNotifyText.Text = string.Empty;
+            UpdateTimeLabelsText(Stopwatcher.GetElapsed());
             UpdateStrings();
-            StartBackgroundWoker();
+            StartBackgroundWokerLabels();
+            StartBackgroundWokerSaveConfig();
         }
 
         #region Methods
         private void UpdateStrings()
         {
             Text = StringsManager.GetString("stopwatch");
-
-            languageToolStripMenuItem.Text = StringsManager.GetString("language");
-
-            labelTextMinutes.Text = StringsManager.GetString("minutes:");
-            labelTextHours.Text = StringsManager.GetString("hours:");
-            labelTextNotes.Text = StringsManager.GetString("notes:");
-            labelTextFinalCost.Text = StringsManager.GetString("finalCost:");
-            labelTextHourPrice.Text = StringsManager.GetString("hourPirce:");
-
-            btnStartStop.Text = IsStopwatcherCounting ? StringsManager.GetString("stop") : StringsManager.GetString("start");
+            btnStartStop.Text = Stopwatcher.GetIsRunning() ? StringsManager.GetString("stop") : StringsManager.GetString("start");
             btnRestart.Text = StringsManager.GetString("reset");
-            btnNote.Text = StringsManager.GetString("note");
         }
-        private async void StartBackgroundWoker()
+
+        private async void StartBackgroundWokerSaveConfig()
         {
-            do // infinity loop with interval
+            while (true)
+            {
+                Config.SaveToFile();
+                await Task.Delay(WorkerIntervalSaveConfig);
+            }
+        }
+
+        private async void StartBackgroundWokerLabels()
+        {
+            while (true)
             {
                 var iterationStartTime = DateTime.Now;
 
-                WorkerTick();
+                if (Stopwatcher.GetIsRunning() && Form.ActiveForm == this)
+                    UpdateTimeLabelsText(Stopwatcher.GetElapsed());
 
-                var iterationEndTime = DateTime.Now;
-                var diff = (iterationEndTime - iterationStartTime).TotalMilliseconds;
-                var timeToWait = Convert.ToInt32(Math.Max(Config.WorkerWaitInterval - diff, 0));
+
+                var diff = (DateTime.Now - iterationStartTime).TotalMilliseconds;
+                var timeToWait = Convert.ToInt32(Math.Max(WorkerIntervalLabels - diff, 1));
 
                 await Task.Delay(timeToWait);
-            } while (true);
+            }
         }
-        
-        private void WorkerTick()
-        {
-            if (!IsStopwatcherExists || !IsStopwatcherCounting)
-                return;
 
-            LastTotalHours = Stopwatcher.Elapsed.TotalHours;
-            UpdateTimeLabelsText(Stopwatcher.Elapsed);
-            UpdateCostLabelText();
-        }
         private void UpdateTimeLabelsText(TimeSpan elapsed)
         {
-            var seconds = elapsed.TotalSeconds;
+            int totalMs = Convert.ToInt32(elapsed.TotalMilliseconds);
+            int totalSecs = totalMs / 1000;
 
-            var _ss = Convert.ToInt32(Math.Floor(seconds % 60));
-            var _mm = Convert.ToInt32(Math.Floor(seconds % 3600 / 60));
-            var _hh = Convert.ToInt32(Math.Floor(seconds / 3600));
+            var hh = totalSecs / 3600;
+            var mm = totalSecs % 3600 / 60;
+            var ss = totalSecs % 60;
+            var afterSeconds = ((totalMs - totalSecs * 1000d) / 10);
 
-            var ss = _ss > 9 ? $"{_ss}" : $"0{_ss}";
-            var mm = _mm > 9 ? $"{_mm}" : $"0{_mm}";
-            var hh = _hh > 9 ? $"{_hh}" : $"0{_hh}";
-
-            labelStopwatchTime.Text = $"{hh}:{mm}:{ss}";
-            labelTotalMinutes.Text = elapsed.TotalMinutes.ToString(@"0.##", CultureInfo.InvariantCulture);
-            labelTotalHours.Text = elapsed.TotalHours.ToString(@"0.####", CultureInfo.InvariantCulture);
+            var f = "00";
+            labelStopwatchTime.Text = $"{hh.ToString(f)}:{mm.ToString(f)}:{ss.ToString(f)}";
+            labelTotalHours.Text = elapsed.TotalHours.ToString(@"0.0000");
+            labelStopwatchTimeAfterSeconds.Text = $". {afterSeconds.ToString(f)}";
         }
-        private void UpdateCostLabelText()
-        {
-            var hourPrice = 0.0;
-            try
-            {
-                hourPrice = Convert.ToDouble(tbxHourPrice.Text, NumberFormatInfo.InvariantInfo);
-            }
-            catch (Exception){}
-            var hours = LastTotalHours;
-            var cost = hours * hourPrice;
 
-            labelCost.Text = cost.ToString(@"0.##", CultureInfo.InvariantCulture);
-        }
-        private void UpdateCostLabelText(double cost)
-        {
-            labelCost.Text = cost.ToString(@"0.##", CultureInfo.InvariantCulture);
-        }
         private void StartOrStopOrContinueStopwatcher()
         {
-            if (IsStopwatcherExists)
-            {
-                if (IsStopwatcherCounting) // need to stop
-                {
-                    Stopwatcher.Stop();
-                    IsStopwatcherCounting = false;
-                }
-                else // need to continue
-                {
-                    Stopwatcher.Start();
-                    IsStopwatcherCounting = true;
-                }
-            }
-            else // need to start new stopwatch
-            {
-                Stopwatcher = Stopwatch.StartNew();
-                IsStopwatcherExists = true;
-                IsStopwatcherCounting = true;
-            }
+            if (Stopwatcher.GetIsRunning()) // Need to stop
+                Stopwatcher.Stop();
+            else // Need to continue
+                Stopwatcher.Start();
         }
         #endregion
 
         #region Event handlers
-        private void listBoxNotes_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Control == true && e.KeyCode == Keys.C) // Copy selected item
-            {
-                string s = listBoxNotes.SelectedItem as string;
-                if (s.Length > 0)
-                {
-                    Clipboard.SetData(DataFormats.StringFormat, s);
-                    e.Handled = true;
-                }
-            }
-            else if (e.KeyCode == Keys.Delete) // Delete selected item
-            {
-                if (listBoxNotes.SelectedIndex > -1)
-                {
-                    NotesList.RemoveAt(listBoxNotes.SelectedIndex);
-                    notesBindingSource.DataSource = new BindingList<string>(NotesList);
-                    e.Handled = true;
-                }
-            }
-        }
         private void CopyTextToClipboardOnAnyLabelDoubleClick(object sender, EventArgs e)
         {
             var label = sender as Label;
-            if (label == null)
-                return;
+            if (label == null) return;
             Clipboard.SetData(DataFormats.StringFormat, label.Text);
         }
         private void btnStartStop_Click(object sender, EventArgs e)
         {
             StartOrStopOrContinueStopwatcher();
-
-            btnStartStop.Text = IsStopwatcherCounting ? StringsManager.GetString("stop") : StringsManager.GetString("start");
+            btnStartStop.Text = Stopwatcher.GetIsRunning()
+                ? StringsManager.GetString("stop")
+                : StringsManager.GetString("start");
         }
         private void btnRestart_Click(object sender, EventArgs e)
         {
-            IsStopwatcherExists = false;
-            Stopwatcher = null;
-            IsStopwatcherCounting = false;
-
-            UpdateTimeLabelsText(new TimeSpan());
-            UpdateCostLabelText(0.0);
-
+            Stopwatcher.StopAndReset();
+            UpdateTimeLabelsText(Stopwatcher.GetElapsed());
             btnStartStop.Text = StringsManager.GetString("start");
         }
-        private void btnNote_Click(object sender, EventArgs e)
-        {
-            var addInfo = tbxNoteText.Text.Length > 0 ? " " + tbxNoteText.Text : "";
-            var note = $"{NotesList.Count + 1}. {labelStopwatchTime.Text}{addInfo}";
-
-            NotesList.Add(note);
-            listBoxNotes.Focus();
-            tbxNoteText.Text = "";
-            notesBindingSource.DataSource = new BindingList<string>(NotesList);
-        }
-        private void tbxHourPrice_TextChanged(object sender, EventArgs e)
-        {
-            var newHourPrice = decimal.Zero;
-            var isValidDecimal = decimal.TryParse(tbxHourPrice.Text, out newHourPrice);
-
-            if (isValidDecimal)
-            {
-                tbxHourPrice.Text = newHourPrice.ToString();
-                Config.HourPrice = newHourPrice;
-                Config.SaveToFile();
-                UpdateCostLabelText();
-            }
-            else
-            {
-                var allowedChars = "0123456789".Select(chr => chr);
-                tbxHourPrice.Text = string.Join("", tbxHourPrice.Text.Where(el => allowedChars.Contains(el)));
-            }
-
-        }
-        private void englishToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            StringsManager.SetLang(Language.English);
-            UpdateStrings();
-        }
-        private void русскийToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            StringsManager.SetLang(Language.Russian);
-            UpdateStrings();
-        }
         #endregion
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (!(Form.ActiveForm == this && keyData == (Keys.Control | Keys.C)))
+                return base.ProcessCmdKey(ref msg, keyData);
+            Clipboard.SetData(DataFormats.StringFormat, labelTotalHours.Text);
+            labelNotifyText.Text = "Copied!";
+            Task.Run(async () =>
+            {
+                await Task.Delay(CopiedNotificationTimeout);
+                Invoke((MethodInvoker)delegate { labelNotifyText.Text = String.Empty; });
+            });
+            return true; // true == "mark event as handled"
+        }
     }
 }

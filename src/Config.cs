@@ -7,16 +7,10 @@ namespace StopwatchDesktopApp.src
     [Serializable]
     public class Config
     {
-        public Int64 WorkerWaitInterval = 1000;
-        public string AppName = "StopwatchDesktopApp";
-        public decimal HourPrice = 1;
-
         [NonSerialized]
-        private string FilePath;
-        public void SetFilePath(string newVal)
-        {
-            FilePath = newVal;
-        }
+        public const string AppName = "StopwatchDesktopApp";
+        [NonSerialized]
+        private string FilePath = null;
 
         public void SaveToFile()
         {
@@ -26,28 +20,23 @@ namespace StopwatchDesktopApp.src
                 formatter.Serialize(fs, this);
             }
         }
-        public static Config LoadFromFile(string path)
+        public static Config LoadOrCreateFile(string filePath)
         {
             var formatter = new BinaryFormatter();
-            Config config = null;
 
-            if (File.Exists(path))
+            if (File.Exists(filePath))
             {
-                using (var fs = new FileStream(path, FileMode.OpenOrCreate))
+                using (var fs = new FileStream(filePath, FileMode.OpenOrCreate))
                 {
-                    config = (Config)formatter.Deserialize(fs);
-                    config.SetFilePath(path);
+                    Config config = (Config)formatter.Deserialize(fs);
+                    config.FilePath = filePath;
+                    return config;
                 }
             }
-            else
-            {
-                config = new Config();
-                config.SetFilePath(path);
-                config.SaveToFile();
-            }
+            var newConfig = new Config() { FilePath = filePath };
+            newConfig.SaveToFile();
 
-
-            return config;
+            return newConfig;
         }
     }
 }

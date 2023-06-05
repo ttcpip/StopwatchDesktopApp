@@ -17,7 +17,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -67,12 +67,14 @@
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
     <Compile Include="src\Languages.cs" />
+    <Compile Include="src\MyStopwatch.cs" />
     <Compile Include="src\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\StringsManager.cs" />
     <EmbeddedResource Include="languages\LanguageStrings.en-US.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>LanguageStrings.en-US.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="languages\LanguageStrings.ru-RU.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using StopwatchDesktopApp.src.forms;
 
@@ -14,13 +11,8 @@ namespace StopwatchDesktopApp.src
         [STAThread]
         static void Main()
         {
-            var config = Config.LoadFromFile("./config.dat");
-
-            // Set system language as current language for the strings manager
-            var currentLangName = Thread.CurrentThread.CurrentCulture.Name;
-            var _lang = StringsManager.StringToLang(currentLangName);
-            var lang = _lang != Language.Undefined ? _lang : Language.English;
-            var stringsManager = new StringsManager(config, lang);
+            var config = Config.LoadOrCreateFile("./config.dat");
+            var stringsManager = new StringsManager(config);
 
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");

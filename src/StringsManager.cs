@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Reflection;
 using System.Resources;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StopwatchDesktopApp.src
 {
@@ -48,24 +44,6 @@ namespace StopwatchDesktopApp.src
         {
             return LangToString(Lang);
         }
-        public static Language StringToLang(string str)
-        {
-            var result = Language.Undefined;
-
-            switch (str)
-            {
-                case "en-US":
-                    result = Language.English;
-                    break;
-                case "ru-RU":
-                    result = Language.Russian;
-                    break;
-                default:
-                    break;
-            }
-
-            return result;
-        }
 
         public string GetString(string stringIdentifier)
         {
@@ -74,11 +52,6 @@ namespace StopwatchDesktopApp.src
             if (!string.IsNullOrEmpty(gotStr))
                 str = gotStr;
             return str;
-        }
-
-        public void SetLang(Language newLang)
-        {
-            Lang = newLang;
         }
     }
 }
