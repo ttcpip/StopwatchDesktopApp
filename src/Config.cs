@@ -21,6 +21,7 @@ namespace StopwatchDesktopApp.src
                 formatter.Serialize(fs, this);
             }
         }
+
         public static Config LoadOrCreateFile(string filePath)
         {
             var formatter = new BinaryFormatter();

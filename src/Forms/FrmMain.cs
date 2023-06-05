@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -11,7 +10,7 @@ namespace StopwatchDesktopApp.src.forms
         #region Properties
         private const int WorkerIntervalLabels = 100;
         private const int WorkerIntervalSaveConfig = 2000;
-        private const int CopiedNotificationTimeout = 400;
+        private const int NotificationTimeout = 400;
         private MyStopwatch Stopwatcher { get; set; }
         private StringsManager StringsManager { get; set; }
         private Config Config { get; set; }
@@ -110,26 +109,58 @@ namespace StopwatchDesktopApp.src.forms
                 ? StringsManager.GetString("stop")
                 : StringsManager.GetString("start");
         }
-        private void btnRestart_Click(object sender, EventArgs e)
+        private void ResetHandler()
         {
             Stopwatcher.StopAndReset();
             UpdateTimeLabelsText(Stopwatcher.GetElapsed());
             btnStartStop.Text = StringsManager.GetString("start");
+
+        }
+        private void btnRestart_Click(object sender, EventArgs e)
+        {
+            ResetHandler();
         }
         #endregion
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            if (!(Form.ActiveForm == this && keyData == (Keys.Control | Keys.C)))
-                return base.ProcessCmdKey(ref msg, keyData);
-            Clipboard.SetData(DataFormats.StringFormat, labelTotalHours.Text);
-            labelNotifyText.Text = "Copied!";
-            Task.Run(async () =>
+            var isCopy = ActiveForm == this && keyData == (Keys.Control | Keys.C);
+            var isReset = ActiveForm == this && keyData == (Keys.Control | Keys.R);
+            var isClose = ActiveForm == this && keyData == (Keys.Control | Keys.Q);
+
+            if (isCopy)
             {
-                await Task.Delay(CopiedNotificationTimeout);
-                Invoke((MethodInvoker)delegate { labelNotifyText.Text = String.Empty; });
-            });
-            return true; // true == "mark event as handled"
+                Clipboard.SetData(DataFormats.StringFormat, labelTotalHours.Text);
+                labelNotifyText.Text = "Copied!";
+            }
+            if (isReset)
+            {
+                ResetHandler();
+                labelNotifyText.Text = "Reset!";
+            }
+            if (isClose)
+            {
+                Close();
+                return true;
+            }
+
+            if (isCopy || isReset)
+            {
+                Task.Run(async () =>
+                {
+                    await Task.Delay(NotificationTimeout);
+                    Invoke((MethodInvoker)delegate { labelNotifyText.Text = String.Empty; });
+                });
+                return true;
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void FrmMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Stopwatcher.Stop();
+            Config.SaveToFile();
         }
     }
 }
