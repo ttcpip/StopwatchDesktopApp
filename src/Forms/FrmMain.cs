@@ -12,7 +12,7 @@ namespace StopwatchDesktopApp.src.forms
         private const int WorkerIntervalLabels = 100;
         private const int WorkerIntervalSaveConfig = 2000;
         private const int CopiedNotificationTimeout = 400;
-        private MyStopwatch Stopwatcher { get; set; } = new MyStopwatch();
+        private MyStopwatch Stopwatcher { get; set; }
         private StringsManager StringsManager { get; set; }
         private Config Config { get; set; }
         #endregion
@@ -22,10 +22,11 @@ namespace StopwatchDesktopApp.src.forms
             InitializeComponent();
 
             Config = config;
+            Stopwatcher = new MyStopwatch(Config.MyStopwatchData);
             StringsManager = stringsManager;
             Size = new Size(MinimumSize.Width, Size.Height);
-
             labelNotifyText.Text = string.Empty;
+
             UpdateTimeLabelsText(Stopwatcher.GetElapsed());
             UpdateStrings();
             StartBackgroundWokerLabels();
@@ -44,7 +45,11 @@ namespace StopwatchDesktopApp.src.forms
         {
             while (true)
             {
-                Config.SaveToFile();
+                if (Stopwatcher.GetIsRunning())
+                {
+                    Stopwatcher.Accumulate();
+                    Config.SaveToFile();
+                }
                 await Task.Delay(WorkerIntervalSaveConfig);
             }
         }

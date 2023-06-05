@@ -2,46 +2,59 @@
 
 namespace StopwatchDesktopApp.src
 {
-    class MyStopwatch
+    [Serializable]
+    public class MyStopwatchData
     {
-        private TimeSpan Accumulation { get; set; }
-        private DateTime StartTime { get; set; }
-        private bool IsRunning { get; set; }
+        public TimeSpan Accumulation { get; set; } = new TimeSpan();
+        public DateTime StartTime { get; set; } = new DateTime();
+        public bool IsRunning { get; set; } = false;
+    }
 
-        public MyStopwatch()
+    public class MyStopwatch
+    {
+        private MyStopwatchData Data = null;
+        public MyStopwatch(MyStopwatchData data)
         {
-            StopAndReset();
+            Data = data;
+            Data.IsRunning = false;
+            Data.StartTime = DateTime.Now;
         }
 
         public void StopAndReset()
         {
-            Accumulation = new TimeSpan();
-            StartTime = new DateTime();
-            IsRunning = false;
+            Data.Accumulation = new TimeSpan();
+            Data.StartTime = new DateTime();
+            Data.IsRunning = false;
         }
 
         public void Start()
         {
-            if (IsRunning) return;
-            StartTime = DateTime.Now;
-            IsRunning = true;
+            if (Data.IsRunning) return;
+            Data.StartTime = DateTime.Now;
+            Data.IsRunning = true;
         }
 
         public void Stop()
         {
-            if (!IsRunning) return;
-            Accumulation += DateTime.Now - StartTime;
-            IsRunning = false;
+            if (!Data.IsRunning) return;
+            Data.Accumulation += DateTime.Now - Data.StartTime;
+            Data.IsRunning = false;
+        }
+
+        public void Accumulate()
+        {
+            Data.Accumulation += DateTime.Now - Data.StartTime;
+            Data.StartTime = DateTime.Now;
         }
 
         public TimeSpan GetElapsed()
         {
-            return IsRunning ? DateTime.Now - StartTime + Accumulation : Accumulation;
+            return Data.IsRunning ? DateTime.Now - Data.StartTime + Data.Accumulation : Data.Accumulation;
         }
 
         public bool GetIsRunning()
         {
-            return IsRunning;
+            return Data.IsRunning;
         }
     }
 }

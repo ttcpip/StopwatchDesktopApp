@@ -11,6 +11,7 @@ namespace StopwatchDesktopApp.src
         public const string AppName = "StopwatchDesktopApp";
         [NonSerialized]
         private string FilePath = null;
+        public MyStopwatchData MyStopwatchData = new MyStopwatchData();
 
         public void SaveToFile()
         {
