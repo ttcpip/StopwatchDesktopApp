@@ -1,5 +1,13 @@
-# Main menu
+### Hotkeys:
 
-![Image](https://i.imgur.com/hyESPax.png)
+| Action   |    Hotkey     |
+|----------|-------------|
+| Copy current total hours | `Ctrl+C` |
+| Reset | `Ctrl+R` |
+| Close | `Ctrl+Q` |
 
-![Image](https://i.imgur.com/2pu02Ni.png)
+### Preview:
+
+![Image](https://i.imgur.com/HoeGtw6.png)
+
+![Image](https://i.imgur.com/Y6a3EYe.gif)
