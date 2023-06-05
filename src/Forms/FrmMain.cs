@@ -4,12 +4,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace StopwatchDesktopApp.src.forms
-{
+{   
     public partial class FrmMain : Form
     {
         #region Properties
-        private const int WorkerIntervalLabels = 100;
-        private const int WorkerIntervalSaveConfig = 2000;
+        private const int WorkerActiveIntervalLabels = 20;
+        private const int WorkerInactiveIntervalLabels = 1000;
+        private const int WorkerIntervalSaveConfig = 5000;
         private const int NotificationTimeout = 400;
         private MyStopwatch Stopwatcher { get; set; }
         private StringsManager StringsManager { get; set; }
@@ -59,12 +60,14 @@ namespace StopwatchDesktopApp.src.forms
             {
                 var iterationStartTime = DateTime.Now;
 
-                if (Stopwatcher.GetIsRunning() && Form.ActiveForm == this)
+                if (Stopwatcher.GetIsRunning())
                     UpdateTimeLabelsText(Stopwatcher.GetElapsed());
 
-
+                var intervalMs = ActiveForm == this ? WorkerActiveIntervalLabels : WorkerInactiveIntervalLabels;
                 var diff = (DateTime.Now - iterationStartTime).TotalMilliseconds;
-                var timeToWait = Convert.ToInt32(Math.Max(WorkerIntervalLabels - diff, 1));
+                var timeToWait = Convert.ToInt32(
+                    Math.Max(intervalMs - diff, 1)
+                );
 
                 await Task.Delay(timeToWait);
             }
