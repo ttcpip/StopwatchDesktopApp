@@ -121,7 +121,7 @@
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelTop.Location = new System.Drawing.Point(0, 0);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(361, 120);
+            this.panelTop.Size = new System.Drawing.Size(383, 176);
             this.panelTop.TabIndex = 0;
             // 
             // FrmMain
@@ -132,10 +132,10 @@
             this.Controls.Add(this.panelTop);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(6);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(383, 176);
-            this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(383, 176);
             this.Name = "FrmMain";
             this.ShowIcon = false;
