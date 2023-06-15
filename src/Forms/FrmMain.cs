@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace StopwatchDesktopApp.src.forms
-{   
+{
     public partial class FrmMain : Form
     {
         #region Properties
@@ -56,20 +56,19 @@ namespace StopwatchDesktopApp.src.forms
 
         private async void StartBackgroundWokerLabels()
         {
+            var iterationTime = DateTime.Now;
             while (true)
             {
-                var iterationStartTime = DateTime.Now;
+                var needIntervalMs = ActiveForm == this ? WorkerActiveIntervalLabels : WorkerInactiveIntervalLabels;
+                var diffMs = (DateTime.Now - iterationTime).TotalMilliseconds;
 
-                if (Stopwatcher.GetIsRunning())
+                if (Stopwatcher.GetIsRunning() && diffMs >= needIntervalMs)
+                {
+                    iterationTime = DateTime.Now;
                     UpdateTimeLabelsText(Stopwatcher.GetElapsed());
+                }
 
-                var intervalMs = ActiveForm == this ? WorkerActiveIntervalLabels : WorkerInactiveIntervalLabels;
-                var diff = (DateTime.Now - iterationStartTime).TotalMilliseconds;
-                var timeToWait = Convert.ToInt32(
-                    Math.Max(intervalMs - diff, 1)
-                );
-
-                await Task.Delay(timeToWait);
+                await Task.Delay(WorkerActiveIntervalLabels);
             }
         }
 
